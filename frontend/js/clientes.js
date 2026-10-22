@@ -1,5 +1,9 @@
 
 const API = 'http://127.0.0.1:8000'
+
+// Bloqueia a página se o utilizador não estiver logado
+protegerPagina()
+
 const formCliente = document.getElementById('form-cliente')
 const botaoSubmit = document.getElementById('btn-submit-cliente')
 
@@ -12,7 +16,7 @@ function limparFormulario() {
 }
 
 async function listarClientes() {
-  const resposta = await fetch(`${API}/clientes`)
+  const resposta = await fetchAutenticado(`${API}/clientes`)
   const clientes = await resposta.json()
 
   const corpo = document.getElementById('corpo-tabela')
@@ -52,13 +56,13 @@ formCliente.addEventListener('submit', async (e) => {
   const idCliente = formCliente.dataset.idCliente
 
   if (idCliente) {
-    await fetch(`${API}/clientes/${idCliente}`, {
+    await fetchAutenticado(`${API}/clientes/${idCliente}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(cliente)
     })
   } else {
-    await fetch(`${API}/clientes`, {
+    await fetchAutenticado(`${API}/clientes`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(cliente)
@@ -70,7 +74,7 @@ formCliente.addEventListener('submit', async (e) => {
 })
 
 async function preencherFormularioEdicao(id) {
-  const resposta = await fetch(`${API}/clientes/${id}`)
+  const resposta = await fetchAutenticado(`${API}/clientes/${id}`)
   const cliente = await resposta.json()
 
   document.getElementById('nome').value = cliente.nome
@@ -88,6 +92,6 @@ async function preencherFormularioEdicao(id) {
 async function deletarCliente(id) {
   if (!confirm('Tem certeza que deseja excluir este cliente?')) return
 
-  await fetch(`${API}/clientes/${id}`, { method: 'DELETE' })
+  await fetchAutenticado(`${API}/clientes/${id}`, { method: 'DELETE' })
   listarClientes()
 }

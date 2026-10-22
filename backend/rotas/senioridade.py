@@ -1,21 +1,21 @@
 # ============================================================
 # rotas/senioridade.py — CRUD de Senioridade
 # Descrição: Endpoints para gerenciar os níveis de senioridade
-#            dos tatuadores (Júnior, Pleno, Sênior).
+#            dos tatuadores (Júnior, Pleno, Sênior, Master...).
 # ============================================================
 
-from fastapi import APIRouter      # organiza rotas em grupos
-from pydantic import BaseModel     # valida os dados que chegam na API
-from database import conectar      # nossa função de conexão
+from fastapi import APIRouter
+from pydantic import BaseModel
+from database import conectar
 
-router = APIRouter()               # cria o grupo de rotas
+router = APIRouter()
 
 # Modelo de dados — define os campos que a senioridade deve ter
 class Senioridade(BaseModel):
     nome: str    # obrigatório — ex: "Júnior", "Pleno", "Sênior"
 
-# GET /senioridade — lista todas as senioridades
-@router.get("/senioridade")
+# GET /senioridade — lista todos os níveis de senioridade
+@router.get("")
 def listar_senioridade():
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
@@ -24,8 +24,8 @@ def listar_senioridade():
     conn.close()
     return senioridades
 
-# GET /senioridade/{id} — busca uma senioridade pelo ID
-@router.get("/senioridade/{id}")
+# GET /senioridade/{id} — busca um nível de senioridade pelo ID
+@router.get("/{id}")
 def buscar_senioridade(id: int):
     conn = conectar()
     cursor = conn.cursor(dictionary=True)
@@ -36,8 +36,8 @@ def buscar_senioridade(id: int):
         return {"erro": "Senioridade não encontrada"}
     return senioridade
 
-# POST /senioridade — cadastra uma nova senioridade
-@router.post("/senioridade")
+# POST /senioridade — cadastra um novo nível de senioridade
+@router.post("")
 def criar_senioridade(senioridade: Senioridade):
     conn = conectar()
     cursor = conn.cursor()
@@ -46,8 +46,8 @@ def criar_senioridade(senioridade: Senioridade):
     conn.close()
     return {"mensagem": "Senioridade cadastrada com sucesso"}
 
-# PUT /senioridade/{id} — atualiza uma senioridade existente
-@router.put("/senioridade/{id}")
+# PUT /senioridade/{id} — atualiza um nível de senioridade existente
+@router.put("/{id}")
 def atualizar_senioridade(id: int, senioridade: Senioridade):
     conn = conectar()
     cursor = conn.cursor()
@@ -56,12 +56,11 @@ def atualizar_senioridade(id: int, senioridade: Senioridade):
     conn.close()
     return {"mensagem": "Senioridade atualizada com sucesso"}
 
-# DELETE /senioridade/{id} — deleta uma senioridade
-@router.delete("/senioridade/{id}")
+# DELETE /senioridade/{id} — exclui um nível de senioridade
+@router.delete("/{id}")
 def deletar_senioridade(id: int):
     conn = conectar()
     cursor = conn.cursor()
-
     try:
         cursor.execute("DELETE FROM senioridade WHERE idsenioridade = %s", (id,))
         conn.commit()
@@ -70,4 +69,4 @@ def deletar_senioridade(id: int):
     except Exception as erro:
         conn.rollback()
         conn.close()
-        return {"erro": "Não foi possível excluir esta senioridade. Verifique se ela está sendo usada por algum tatuador."}
+        return {"erro": "Não foi possível excluir esta senioridade. Verifique se algum tatuador está vinculado a ela."}
