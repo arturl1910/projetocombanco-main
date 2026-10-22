@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Tempo de geração: 22-Out-2026 às 02:29
+-- Tempo de geração: 22-Out-2026 às 13:52
 -- Versão do servidor: 10.4.32-MariaDB
 -- versão do PHP: 8.2.12
 
@@ -48,7 +48,8 @@ CREATE TABLE `agendamento` (
 INSERT INTO `agendamento` (`idagendamento`, `idcliente`, `idtatuador`, `dataagendamento`, `horaagendamento`, `descricaotatuagem`, `desenhoaprovado`, `valortatuagem`, `status`) VALUES
 (1, 1, 1, '2025-05-10', '14:00:00', 'Mandala no braço', '1_images.jpg', 350.00, 'confirmado'),
 (2, 2, 2, '2025-05-11', '10:00:00', 'Rosa aquarela no ombro', '2_images (2).jpg', 200.00, 'confirmado'),
-(4, 5, 4, '2026-10-30', '15:25:00', 'leão nas costas', '4_images (1).jpg', 1200.00, 'confirmado');
+(4, 5, 4, '2026-10-30', '15:25:00', 'leão nas costas', '4_images.jpg', 1200.00, 'confirmado'),
+(5, 5, 6, '2026-12-09', '12:30:00', 'palhaço na perna', '5_images.jpg', 500.00, 'confirmado');
 
 -- --------------------------------------------------------
 
@@ -73,7 +74,8 @@ CREATE TABLE `cliente` (
 INSERT INTO `cliente` (`idcliente`, `nome`, `cpf`, `telefone`, `datacadastro`, `cidade`, `uf`) VALUES
 (1, 'Ana Silva', '44444444444', '11988880001', '2026-10-21', 'São Paulo', 'SP'),
 (2, 'Bruno Costa', '55555555555', '31988880002', '2024-03-22', 'Belo Horizonte', 'MG'),
-(5, 'Claudio Alves', '66666666667', '11945679662', '2026-10-21', 'Ribeirão Pires', 'SP');
+(5, 'Claudio Alves', '66666666667', '11945679662', '2026-10-22', 'Ribeirão Pires', 'SP'),
+(6, 'Jose Alves', '12312312310', '119894435689', '2026-10-22', 'Mauá', 'SP');
 
 -- --------------------------------------------------------
 
@@ -141,7 +143,8 @@ INSERT INTO `tatuador` (`idtatuador`, `nometatuador`, `cpf`, `email`, `telefone`
 (2, 'Carla Souza', '22222222222', 'carla@estudio.com', '11999990002', '2022-06-15', 2),
 (3, 'Pedro Lima', '33333333333', 'pedro@estudio.com', '11999990003', '2024-01-10', 1),
 (4, 'Kauã ', '12352360056', 'kaua@estudio.com', '11989796601', '2026-10-21', 1),
-(5, 'Jeferson Santos', '89789789797', 'jeferson@estudio.com', '119679031324', '0000-00-00', 2);
+(5, 'Jeferson Santos', '89789789797', 'jeferson@estudio.com', '119679031324', '2026-08-18', 2),
+(6, 'Claudinei', '12345678910', 'claudinei@estudio.com', '11923245678', '2026-10-22', 1);
 
 -- --------------------------------------------------------
 
@@ -165,9 +168,10 @@ INSERT INTO `tatuador_estilo` (`idtatuador`, `idestilo`, `dataestilo`) VALUES
 (2, 2, '2022-06-15'),
 (3, 4, '2024-01-10'),
 (4, 2, '2026-10-21'),
-(5, 1, '2026-10-21'),
-(5, 3, '2026-10-21'),
-(5, 4, '2026-10-21');
+(5, 1, '2026-10-22'),
+(5, 3, '2026-10-22'),
+(5, 4, '2026-10-22'),
+(6, 2, '2026-10-22');
 
 -- --------------------------------------------------------
 
@@ -191,7 +195,8 @@ CREATE TABLE `usuario` (
 INSERT INTO `usuario` (`idusuario`, `nome`, `email`, `senha`, `tipo`, `idcliente`) VALUES
 (1, 'artur miguel', 'arturmiguelpr06@gmail.com', '$2b$12$Q/0STKW00L/sp/ldvpQdQ.2zmx79IJc5TELp9ijNeDaGJsBkyg/o.', 'funcionario', NULL),
 (2, 'Administrador', 'admin@estudio.com', '$2b$12$enQpWU23UyTSIfVcQEp9XeGpEwcMwWzzRIUBNBNLO/aTM756whYpK', 'admin', NULL),
-(3, 'Cintia Pinho', 'Cintia@estudio.com', '$2b$12$RgBPFnVtcTHogY3qjot.m.ZX18MSfxci4zRWfJWG6BEiuezDJh87C', 'funcionario', NULL);
+(3, 'Cintia Pinho', 'Cintia@estudio.com', '$2b$12$RgBPFnVtcTHogY3qjot.m.ZX18MSfxci4zRWfJWG6BEiuezDJh87C', 'funcionario', NULL),
+(4, 'keth', 'keth@estudio', '$2b$12$J0NJf67Hw3Wbx1iqgW6dfu24n8JWtekyA7Xcuhb0qUbkCS7Tei0Dy', 'funcionario', NULL);
 
 --
 -- Índices para tabelas despejadas
@@ -255,37 +260,37 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de tabela `agendamento`
 --
 ALTER TABLE `agendamento`
-  MODIFY `idagendamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idagendamento` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `cliente`
 --
 ALTER TABLE `cliente`
-  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idcliente` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `estilo`
 --
 ALTER TABLE `estilo`
-  MODIFY `idestilo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idestilo` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de tabela `senioridade`
 --
 ALTER TABLE `senioridade`
-  MODIFY `idsenioridade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idsenioridade` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de tabela `tatuador`
 --
 ALTER TABLE `tatuador`
-  MODIFY `idtatuador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `idtatuador` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT de tabela `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restrições para despejos de tabelas
