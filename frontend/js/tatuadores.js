@@ -150,10 +150,16 @@ async function preencherFormularioEdicao(tatuador) {
   botaoSubmit.classList.add('btn-success')
 }
 
-// ─── Exclui um tatuador ───
+// ─── Exclui um tatuador (baseado na atividade) ───
 async function deletarTatuador(id) {
   if (!confirm('Tem certeza que deseja excluir este tatuador?')) return
 
-  await fetchAutenticado(`${API}/tatuadores/${id}`, { method: 'DELETE' })
-  listarTatuadores()
+  const resposta = await fetchAutenticado(`${API}/tatuadores/${id}`, { method: 'DELETE' })
+  const resultado = await resposta.json()
+
+  if (resposta.ok) {
+    listarTatuadores()
+  } else {
+    alert(resultado.erro || 'Erro ao excluir tatuador')
+  }
 }

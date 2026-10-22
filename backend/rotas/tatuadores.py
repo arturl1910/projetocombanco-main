@@ -92,7 +92,12 @@ def deletar_tatuador(id: int):
     conn = conectar()
     cursor = conn.cursor()
     try:
+        # Primeiro removemos os estilos associados para evitar conflito de chave estrangeira
+        cursor.execute("DELETE FROM tatuador_estilo WHERE idtatuador = %s", (id,))
+        
+        # Depois apagamos o tatuador com segurança
         cursor.execute("DELETE FROM tatuador WHERE idtatuador = %s", (id,))
+        
         conn.commit()
         conn.close()
         return {"mensagem": "Tatuador deletado com sucesso"}
